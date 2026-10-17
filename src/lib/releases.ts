@@ -58,7 +58,7 @@ export const RELEASES: Release[] = [
 /**
  * Where release files are hosted. Placeholders: {product}, {version}, {file}.
  * GitHub Releases example:
- *   https://github.com/<owner>/<repo>/releases/download/v{version}/{file}
+ *   https://github.com/<owner>/<repo>/releases/download/{product}-v{version}/{file}
  * The default serves files placed in public/files/.
  */
 const DOWNLOAD_URL_TEMPLATE = process.env.DOWNLOAD_URL_TEMPLATE ?? "/files/{file}";
@@ -72,9 +72,14 @@ export function releasesFor(product: string): Release[] {
   return RELEASES.filter((r) => r.product === product);
 }
 
-/** Anchor for a release on the versions page, e.g. "docbase-1.0.0" for /releases#docbase-1.0.0. */
+/** Anchor for a release on its app's versions page, e.g. "v1.0.0". */
 export function releaseId(release: Release): string {
-  return `${release.product}-${release.version}`;
+  return `v${release.version}`;
+}
+
+/** An app's versions page, optionally scrolled to one release, e.g. /apps/docbase/versions#v1.0.0. */
+export function versionsHref(product: ProductId, release?: Release): string {
+  return `/apps/${product}/versions${release ? `#${releaseId(release)}` : ""}`;
 }
 
 export function fileUrl(release: Release, platform: PlatformId): string | undefined {

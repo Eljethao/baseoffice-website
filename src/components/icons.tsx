@@ -22,14 +22,15 @@ export function OSLogo({ os, ...props }: IconProps & { os: "mac" | "windows" }) 
   return os === "mac" ? <AppleLogo {...props} /> : <WindowsLogo {...props} />;
 }
 
-/** BaseOffice mark: three fanned pages in the colours of DocBase, SheetBase and SlideBase. */
-export function BaseOfficeMark(props: IconProps) {
+/** Base Store mark: a grid of app tiles in the colours of DocBase, SheetBase and SlideBase, plus one for apps to come. */
+export function BaseStoreMark(props: IconProps) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" {...props}>
-      <rect x="3" y="8" width="15" height="19" rx="3" fill="#f97316" transform="rotate(-14 10.5 17.5)" />
-      <rect x="8" y="6" width="15" height="20" rx="3" fill="#22c55e" transform="rotate(-6 15.5 16)" />
-      <rect x="13" y="4" width="16" height="23" rx="3" fill="#2563eb" />
-      <path d="M17 11h8M17 15.5h8M17 20h5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      <rect x="2" y="2" width="13" height="13" rx="3.5" fill="#2563eb" />
+      <rect x="17" y="2" width="13" height="13" rx="3.5" fill="#16a34a" />
+      <rect x="2" y="17" width="13" height="13" rx="3.5" fill="#ea580c" />
+      <rect x="17" y="17" width="13" height="13" rx="3.5" fill="#4f46e5" />
+      <path d="M23.5 20.5v6M20.5 23.5h6" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
     </svg>
   );
 }

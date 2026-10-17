@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Download } from "lucide-react";
+import { notFound } from "next/navigation";
+import { ChevronLeft, Download } from "lucide-react";
 import { buttonClass } from "@/components/button";
 import { OSLogo } from "@/components/icons";
 import { ProductIcon } from "@/components/product-icon";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, appHref, getProduct } from "@/lib/products";
 import {
   PLATFORMS,
   fileUrl,
@@ -15,48 +16,51 @@ import {
   type Release,
 } from "@/lib/releases";
 
-export const metadata: Metadata = {
-  title: "All versions",
-  description: "Download any version of the BaseOffice apps and see what changed in each one.",
-};
+// Every app is prerendered from generateStaticParams, so only unknown IDs block (and get a real 404).
+export const instant = false;
 
-export default function ReleasesPage() {
-  const products = PRODUCTS.map((p) => ({ ...p, releases: releasesFor(p.id) })).filter(
-    (p) => p.releases.length > 0,
-  );
+export function generateStaticParams() {
+  return PRODUCTS.map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/apps/[id]/versions">): Promise<Metadata> {
+  const app = getProduct((await params).id);
+  if (!app) return {};
+  return {
+    title: `${app.name} versions`,
+    description: `Download any version of ${app.name} and see what changed in each one.`,
+  };
+}
+
+export default async function VersionsPage({ params }: PageProps<"/apps/[id]/versions">) {
+  const app = getProduct((await params).id);
+  if (!app) notFound();
+  const releases = releasesFor(app.id);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">All versions</h1>
-      <p className="mt-3 text-muted">
-        Every release of the BaseOffice apps, with what changed and the files to download. For the newest version, go
-        to the{" "}
-        <Link href="/download" className="text-link hover:underline">
-          download page
-        </Link>
-        .
-      </p>
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
+      <Link href={appHref(app.id)} className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
+        <ChevronLeft className="size-4" aria-hidden="true" />
+        {app.name}
+      </Link>
 
-      {products.length === 0 && <p className="mt-12 text-muted">There is no release to download yet.</p>}
+      <div className="mt-6 flex items-center gap-4">
+        <ProductIcon id={app.id} size={56} />
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{app.name} versions</h1>
+          <p className="mt-1 text-muted">
+            {releases.length === 0
+              ? "No versions released yet."
+              : `${releases.length} ${releases.length === 1 ? "version" : "versions"}, newest first. Download any of them.`}
+          </p>
+        </div>
+      </div>
 
-      {products.map((p) => (
-        <section key={p.id} aria-labelledby={`${p.id}-versions`} className="mt-12">
-          <div className="flex items-center gap-3">
-            <ProductIcon id={p.id} size={40} />
-            <h2 id={`${p.id}-versions`} className="text-2xl font-semibold tracking-tight">
-              {p.name}
-            </h2>
-            <span className="text-sm text-muted">
-              {p.releases.length} {p.releases.length === 1 ? "version" : "versions"}
-            </span>
-          </div>
-          <ol className="mt-6 space-y-6">
-            {p.releases.map((r, i) => (
-              <ReleaseEntry key={r.version} release={r} latest={i === 0} />
-            ))}
-          </ol>
-        </section>
-      ))}
+      <ol className="mt-10 space-y-6">
+        {releases.map((r, i) => (
+          <ReleaseEntry key={r.version} release={r} latest={i === 0} />
+        ))}
+      </ol>
     </div>
   );
 }
@@ -67,7 +71,7 @@ function ReleaseEntry({ release, latest }: { release: Release; latest: boolean }
   return (
     <li id={releaseId(release)} className="rounded-2xl border border-border bg-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h3 className="text-xl font-semibold">Version {release.version}</h3>
+        <h2 className="text-xl font-semibold">Version {release.version}</h2>
         {latest && (
           <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-medium text-link">Latest</span>
         )}
@@ -83,7 +87,7 @@ function ReleaseEntry({ release, latest }: { release: Release; latest: boolean }
       </ul>
 
       <div className="mt-6 border-t border-border pt-6">
-        <h4 className="text-sm font-semibold">Downloads</h4>
+        <h3 className="text-sm font-semibold">Downloads</h3>
         {platforms.length === 0 ? (
           <p className="mt-2 text-sm text-muted">No files are available for this version.</p>
         ) : (

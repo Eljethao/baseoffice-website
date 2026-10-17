@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "BaseOffice: office apps for macOS and Windows",
-    template: "%s · BaseOffice",
+    default: "Base Store: desktop apps for macOS and Windows",
+    template: "%s · Base Store",
   },
   description: site.description,
   authors: [{ name: site.author, url: site.authorUrl }],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: site.name,
     type: "website",
-    images: [{ url: "/screenshots/docbase.png", width: 2640, height: 1704, alt: "DocBase word processor" }],
+    images: [{ url: "/screenshots/docbase.png", width: 2640, height: 1704, alt: "DocBase, a word processor from Base Store" }],
   },
 };
 

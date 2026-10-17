@@ -7,11 +7,11 @@
   --subtle: #f4f6fa;
   --card: #ffffff;
   --border: #e3e7ee;
-  --primary: #2457d6;
-  --primary-hover: #1c47b5;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
   --primary-fg: #ffffff;
-  --primary-soft: #e8effd;
-  --link: #2457d6;
+  --primary-soft: #eef0ff;
+  --link: #4f46e5;
   --sheet: #15803d;
   --slide: #c2410c;
 }
@@ -24,11 +24,11 @@
     --subtle: #111724;
     --card: #121927;
     --border: #232c3d;
-    --primary: #3b6cf0;
-    --primary-hover: #5381ff;
+    --primary: #5850ec;
+    --primary-hover: #6d66f5;
     --primary-fg: #ffffff;
-    --primary-soft: #18264a;
-    --link: #8fb0ff;
+    --primary-soft: #1f1d4d;
+    --link: #a5b4fc;
     --sheet: #4ade80;
     --slide: #fb923c;
   }

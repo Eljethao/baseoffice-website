@@ -2,11 +2,13 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ProductIcon } from "./product-icon";
 import { CATEGORIES, appHref, type Product } from "@/lib/products";
+import { appDownloads, formatDownloads } from "@/lib/downloads";
 import { latestRelease } from "@/lib/releases";
 
 /** A store listing tile that links to the app's page. */
-export function AppCard({ app }: { app: Product }) {
+export async function AppCard({ app }: { app: Product }) {
   const release = latestRelease(app.id);
+  const downloads = await appDownloads(app.id);
 
   return (
     <Link
@@ -25,7 +27,10 @@ export function AppCard({ app }: { app: Product }) {
       <p className="mt-4 flex-1 text-sm">{app.tagline}</p>
       <div className="mt-5 flex items-center justify-between text-sm">
         {app.status === "available" && release ? (
-          <span className="text-muted">Version {release.version}</span>
+          <span className="text-muted">
+            Version {release.version}
+            {downloads > 0 && ` · ${formatDownloads(downloads, true)}`}
+          </span>
         ) : (
           <span className="rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted">
             Coming soon

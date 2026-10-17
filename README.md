@@ -50,6 +50,9 @@ Create `.env.local` (locally) or set these in Vercel's Environment Variables:
 - `DOWNLOAD_URL_TEMPLATE`: where release files live, with `{product}`, `{version}` and `{file}` placeholders.
   Unset, files are served from `public/files/`. For GitHub Releases:
   `https://github.com/OWNER/REPO/releases/download/{product}-v{version}/{file}`.
+  With GitHub Releases, the site also shows download counts (from GitHub, refreshed hourly) on app cards, app pages
+  and the versions page. Counts are hidden while they are 0.
+- `GITHUB_TOKEN` (optional): a GitHub token with no scopes, to raise GitHub's API limit if counts stop showing.
 
 ## Layout
 

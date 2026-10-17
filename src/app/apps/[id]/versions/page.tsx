@@ -5,6 +5,7 @@ import { ChevronLeft, Download } from "lucide-react";
 import { buttonClass } from "@/components/button";
 import { OSLogo } from "@/components/icons";
 import { ProductIcon } from "@/components/product-icon";
+import { formatDownloads, releaseDownloads } from "@/lib/downloads";
 import { PRODUCTS, appHref, getProduct } from "@/lib/products";
 import {
   PLATFORMS,
@@ -65,7 +66,8 @@ export default async function VersionsPage({ params }: PageProps<"/apps/[id]/ver
   );
 }
 
-function ReleaseEntry({ release, latest }: { release: Release; latest: boolean }) {
+async function ReleaseEntry({ release, latest }: { release: Release; latest: boolean }) {
+  const downloads = await releaseDownloads(release);
   const platforms = (Object.keys(PLATFORMS) as PlatformId[]).filter((id) => release.files[id]);
 
   return (
@@ -77,6 +79,7 @@ function ReleaseEntry({ release, latest }: { release: Release; latest: boolean }
         )}
         <time dateTime={release.date} className="w-full text-sm text-muted sm:ml-auto sm:w-auto">
           {formatDate(release.date)}
+          {downloads > 0 && ` · ${formatDownloads(downloads)}`}
         </time>
       </div>
       <p className="mt-4">{release.summary}</p>

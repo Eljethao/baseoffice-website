@@ -9,6 +9,7 @@ import { DownloadButtons } from "@/components/download-buttons";
 import { OSLogo } from "@/components/icons";
 import { ProductIcon } from "@/components/product-icon";
 import { RecommendedBadge } from "@/components/recommended-badge";
+import { appDownloads, formatDownloads } from "@/lib/downloads";
 import { CATEGORIES, PRODUCTS, getProduct, type Product } from "@/lib/products";
 import {
   PLATFORMS,
@@ -40,6 +41,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
   const app = getProduct((await params).id);
   if (!app) notFound();
   const release = latestRelease(app.id);
+  const downloads = await appDownloads(app.id);
   const category = CATEGORIES[app.category];
 
   return (
@@ -58,6 +60,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
             <a href={site.authorUrl} className="hover:text-foreground hover:underline">
               {site.author}
             </a>
+            {downloads > 0 && <> · {formatDownloads(downloads)}</>}
           </p>
           <p className="mt-4 max-w-2xl text-lg text-pretty">{app.tagline}</p>
           <div className="mt-6">
@@ -140,7 +143,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
 
         <aside className="space-y-6">
           {release && <DownloadsCard release={release} />}
-          <InfoCard app={app} release={release} />
+          <InfoCard app={app} release={release} downloads={downloads} />
         </aside>
       </div>
     </div>
@@ -205,7 +208,7 @@ function DownloadsCard({ release }: { release: Release }) {
   );
 }
 
-function InfoCard({ app, release }: { app: Product; release?: Release }) {
+function InfoCard({ app, release, downloads }: { app: Product; release?: Release; downloads: number }) {
   const rows: [string, ReactNode][] = [
     ["Developer", <a key="dev" href={site.authorUrl} className="text-link hover:underline">{site.author}</a>],
     ["Category", CATEGORIES[app.category].name],
@@ -214,6 +217,7 @@ function InfoCard({ app, release }: { app: Product; release?: Release }) {
     rows.push(
       ["Version", release.version],
       ["Released", formatDate(release.date)],
+      ...(downloads > 0 ? [["Downloads", downloads.toLocaleString("en-US")] as [string, ReactNode]] : []),
       ["Requires", <>{REQUIREMENTS.mac}<br />{REQUIREMENTS.windows}</>],
     );
   }

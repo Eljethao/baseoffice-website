@@ -57,7 +57,7 @@ Create `.env.local` (locally) or set these in Vercel's Environment Variables:
 ## Layout
 
 ```
-src/app/           store home, app and versions pages, the /download redirect route, sitemap, robots, icon
+src/app/           store home, app and versions pages, sitemap, robots, icon (the /download links live in next.config.ts)
 src/components/    header, footer, app card, download buttons (OS detection), app icons, screenshot frame
 src/lib/           site info, apps and categories, releases and download URLs
 public/            DocBase icon and screenshot; files/ for local release binaries (git-ignored)

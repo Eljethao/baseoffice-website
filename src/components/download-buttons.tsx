@@ -21,27 +21,26 @@ const LABELS: Record<PlatformId, string> = {
 };
 
 /**
- * One download button per file of the latest version. The visitor's own platform comes first and is highlighted;
- * before hydration (and on phones) Apple Silicon does.
+ * One download button per file of the latest version, always in the same order so nothing moves under the cursor.
+ * The button for the visitor's own platform is highlighted; before hydration (and on phones) Apple Silicon is.
  */
 export function DownloadButtons({ product, productName, release, align = "center" }: Props) {
   const platform = usePlatform();
   const mine: PlatformId =
     platform?.os === "windows" ? "win-x64" : platform?.os === "mac" && platform.arch === "x64" ? "mac-x64" : "mac-arm64";
   const ids = (Object.keys(LABELS) as PlatformId[]).filter((id) => release.files[id]);
-  const order = ids.includes(mine) ? [mine, ...ids.filter((id) => id !== mine)] : ids;
   const start = align === "start";
 
   return (
     <div className={`flex flex-col gap-4 ${start ? "items-start" : "items-center"}`}>
       <div className={`flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap ${start ? "" : "justify-center"}`}>
-        {order.map((id, i) => {
+        {ids.map((id) => {
           const size = release.files[id]!.size;
           return (
             <a
               key={id}
               href={latestLink(product, id)}
-              className={buttonClass(i === 0 ? "primary" : "secondary", "lg")}
+              className={buttonClass(id === mine ? "primary" : "secondary", "lg")}
             >
               <OSLogo os={PLATFORMS[id].os} className="size-5" />
               {LABELS[id]}

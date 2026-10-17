@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BaseOffice website
 
-## Getting Started
+The download and release site for the BaseOffice apps (DocBase now; SheetBase and SlideBase later).
+Built with Next.js 16 (App Router, Cache Components) and Tailwind CSS 4.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm start        # serve the production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Route | What it is |
+| --- | --- |
+| `/` | Suite overview, DocBase features, download buttons for the latest version that put the visitor's OS first |
+| `/download` | Latest macOS (Apple Silicon, Intel) and Windows downloads, requirements, install steps |
+| `/releases` | All versions: release notes and download files for every release, e.g. `/releases#docbase-1.0.0` |
+| `/download/<product>/<platform>` | Stable link that redirects to the newest file, e.g. `/download/docbase/win-x64` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Publishing a new release
 
-## Learn More
+1. Build the installers in the app folder (e.g. `../DocBase`) with electron-builder.
+2. Upload them where the site can link to them (GitHub Releases, S3/R2, or drop them in `public/files/` for local testing).
+3. Add a new entry at the **top** of `RELEASES` in `src/lib/releases.ts`: version, date, notes, and the file name for
+   each platform (`mac-arm64`, `mac-x64`, `win-x64`). Optionally add `size`.
+4. Redeploy. The download buttons and the `/download/...` links point to the new files. Keep the older entries (and
+   their files) so they stay downloadable from `/releases`.
 
-To learn more about Next.js, take a look at the following resources:
+## Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy `.env.example` to `.env.local`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `NEXT_PUBLIC_SITE_URL`: the public URL of the site (metadata, sitemap, robots.txt).
+- `DOWNLOAD_URL_TEMPLATE`: where release files live, with `{product}`, `{version}` and `{file}` placeholders.
+  Unset, files are served from `public/files/`. For GitHub Releases:
+  `https://github.com/OWNER/REPO/releases/download/v{version}/{file}`.
 
-## Deploy on Vercel
+## Layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/app/           pages, the /download redirect route, sitemap, robots, icon
+src/components/    header, footer, download buttons (OS detection), product icons, screenshot frame
+src/lib/           site info, product list, releases and download URLs
+public/            DocBase icon and screenshot; files/ for local release binaries (git-ignored)
+```

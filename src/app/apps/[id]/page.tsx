@@ -65,7 +65,7 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
           <p className="mt-4 max-w-2xl text-lg text-pretty">{app.tagline}</p>
           <div className="mt-6">
             {release ? (
-              <DownloadButtons product={app.id} productName={app.name} version={release.version} align="start" />
+              <DownloadButtons product={app.id} productName={app.name} release={release} align="start" />
             ) : (
               <p className="inline-flex rounded-full border border-border px-3 py-1 text-sm font-medium text-muted">
                 Coming soon

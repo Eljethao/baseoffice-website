@@ -84,7 +84,7 @@ export default function Home() {
                   <DownloadButtons
                     product={featured.id}
                     productName={featured.name}
-                    version={featuredRelease.version}
+                    release={featuredRelease}
                     align="start"
                   />
                 </div>

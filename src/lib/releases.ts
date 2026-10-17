@@ -16,7 +16,7 @@ export const REQUIREMENTS: Record<OS, string> = {
 };
 
 export interface ReleaseFile {
-  /** File name as produced by electron-builder, e.g. "DocBase-1.0.0-arm64.dmg". */
+  /** File name as produced by electron-builder, e.g. "DocBase-1.0.0-mac-arm64.dmg". */
   file: string;
   /** Optional display size, e.g. "112 MB". */
   size?: string;
@@ -48,9 +48,9 @@ export const RELEASES: Release[] = [
       "Built-in Lao fonts (Phetsarath OT and Noto Sans Lao).",
     ],
     files: {
-      "mac-arm64": { file: "DocBase-1.0.0-arm64.dmg" },
-      "mac-x64": { file: "DocBase-1.0.0-x64.dmg" },
-      "win-x64": { file: "DocBase-1.0.0-x64.exe" },
+      "mac-arm64": { file: "DocBase-1.0.0-mac-arm64.dmg", size: "129 MB" },
+      "mac-x64": { file: "DocBase-1.0.0-mac-x64.dmg", size: "136 MB" },
+      "win-x64": { file: "DocBase-1.0.0-windows-setup.exe", size: "108 MB" },
     },
   },
 ];

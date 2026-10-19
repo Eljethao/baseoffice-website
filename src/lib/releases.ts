@@ -1,3 +1,4 @@
+import { INTL_LOCALE, type Locale, type Text } from "./i18n";
 import type { ProductId } from "./products";
 
 export type OS = "mac" | "windows";
@@ -10,9 +11,9 @@ export const PLATFORMS: Record<PlatformId, { os: OS; name: string; arch: string;
 };
 
 /** Minimum OS versions. Electron 43 needs macOS 12; Electron 44+ needs macOS 13. */
-export const REQUIREMENTS: Record<OS, string> = {
-  mac: "macOS 12 Monterey or later",
-  windows: "Windows 10 or 11, 64-bit",
+export const REQUIREMENTS: Record<OS, Text> = {
+  mac: { en: "macOS 12 Monterey or later", lo: "macOS 12 Monterey ຫຼື ໃໝ່ກວ່າ" },
+  windows: { en: "Windows 10 or 11, 64-bit", lo: "Windows 10 ຫຼື 11, 64-bit" },
 };
 
 export interface ReleaseFile {
@@ -27,8 +28,9 @@ export interface Release {
   version: string;
   /** ISO date, YYYY-MM-DD. */
   date: string;
-  summary: string;
-  notes: string[];
+  /** English, or { en, lo } — see Text in i18n.ts. Untranslated text is shown in English. */
+  summary: Text;
+  notes: Text[];
   files: Partial<Record<PlatformId, ReleaseFile>>;
 }
 
@@ -38,15 +40,15 @@ export const RELEASES: Release[] = [
     product: "sheetbase",
     version: "1.0.0",
     date: "2026-10-19",
-    summary: "The first release of SheetBase for macOS and Windows.",
+    summary: { en: "The first release of SheetBase for macOS and Windows.", lo: "ເວີຊັນທຳອິດຂອງ SheetBase ສຳລັບ macOS ແລະ Windows." },
     notes: [
-      "Open and save Excel workbooks (.xlsx, .xlsm) with formulas, styles, number formats, merged cells, frozen panes, notes, data validation and conditional formatting.",
-      "418 built-in functions, including XLOOKUP, LET and dynamic arrays that spill (SEQUENCE, UNIQUE, SORT, FILTER).",
-      "Column, bar, line, area, pie, doughnut and scatter charts.",
-      "Sort, AutoFilter, Text to Columns, Remove Duplicates, Flash Fill, Goal Seek and PivotTables.",
-      "Format as Table, cell styles, and conditional formatting with data bars, colour scales and icon sets.",
-      "Templates for a monthly budget, invoice, to-do list, loan calculator and sales report.",
-      "Print and export to PDF, AutoRecover, and Version History on every save.",
+      { en: "Open and save Excel workbooks (.xlsx, .xlsm) with formulas, styles, number formats, merged cells, frozen panes, notes, data validation and conditional formatting.", lo: "ເປີດ ແລະ ບັນທຶກໄຟລ໌ Excel (.xlsx, .xlsm) ພ້ອມສູດ, ຮູບແບບເຊວ, ຮູບແບບຕົວເລກ, ເຊວທີ່ລວມກັນ, ການຕຶງແຖວ, ບັນທຶກ, ການກວດສອບຂໍ້ມູນ ແລະ ການຈັດຮູບແບບຕາມເງື່ອນໄຂ." },
+      { en: "418 built-in functions, including XLOOKUP, LET and dynamic arrays that spill (SEQUENCE, UNIQUE, SORT, FILTER).", lo: "ມີ 418 ຟັງຊັນໃນຕົວ, ລວມທັງ XLOOKUP, LET ແລະ dynamic arrays ທີ່ກະຈາຍຜົນອອກເອງ (SEQUENCE, UNIQUE, SORT, FILTER)." },
+      { en: "Column, bar, line, area, pie, doughnut and scatter charts.", lo: "ແຜນພູມຖັນ, ແທ່ງ, ເສັ້ນ, ພື້ນທີ່, ວົງມົນ, ໂດນັດ ແລະ ກະແຈກກະຈາຍ." },
+      { en: "Sort, AutoFilter, Text to Columns, Remove Duplicates, Flash Fill, Goal Seek and PivotTables.", lo: "ຈັດລຽງ, AutoFilter, Text to Columns, ລຶບຂໍ້ມູນຊ້ຳ, Flash Fill, Goal Seek ແລະ PivotTable." },
+      { en: "Format as Table, cell styles, and conditional formatting with data bars, colour scales and icon sets.", lo: "Format as Table, ຮູບແບບເຊວ ແລະ ການຈັດຮູບແບບຕາມເງື່ອນໄຂດ້ວຍແຖບຂໍ້ມູນ, ລະດັບສີ ແລະ ຊຸດໄອຄອນ." },
+      { en: "Templates for a monthly budget, invoice, to-do list, loan calculator and sales report.", lo: "ແມ່ແບບສຳລັບງົບປະມານລາຍເດືອນ, ໃບແຈ້ງໜີ້, ລາຍການສິ່ງທີ່ຕ້ອງເຮັດ, ຄິດໄລ່ເງິນກູ້ ແລະ ລາຍງານຍອດຂາຍ." },
+      { en: "Print and export to PDF, AutoRecover, and Version History on every save.", lo: "ພິມ ແລະ ສົ່ງອອກເປັນ PDF, ກູ້ຄືນອັດຕະໂນມັດ (AutoRecover) ແລະ ປະຫວັດເວີຊັນທຸກຄັ້ງທີ່ບັນທຶກ." },
     ],
     files: {
       "mac-arm64": { file: "SheetBase-1.0.0-mac-arm64.dmg", size: "131 MB" },
@@ -58,14 +60,14 @@ export const RELEASES: Release[] = [
     product: "docbase",
     version: "1.0.0",
     date: "2026-10-17",
-    summary: "The first release of DocBase for macOS and Windows.",
+    summary: { en: "The first release of DocBase for macOS and Windows.", lo: "ເວີຊັນທຳອິດຂອງ DocBase ສຳລັບ macOS ແລະ Windows." },
     notes: [
-      "Open and save Word documents (.docx), including password-protected files, tracked changes, comments, equations and charts.",
-      "Print Layout with real page breaks, sections, headers and footers, columns, watermarks and page borders.",
-      "Tables of contents, footnotes and endnotes, captions, citations, bibliography and index.",
-      "Track Changes, comments, Compare, spelling and grammar checks, and Version History on every save.",
-      "Mail merge for letters, labels and envelopes.",
-      "Built-in Lao fonts (Phetsarath OT and Noto Sans Lao).",
+      { en: "Open and save Word documents (.docx), including password-protected files, tracked changes, comments, equations and charts.", lo: "ເປີດ ແລະ ບັນທຶກເອກະສານ Word (.docx), ລວມທັງໄຟລ໌ທີ່ມີລະຫັດຜ່ານ, ການຕິດຕາມການແກ້ໄຂ, ຄຳເຫັນ, ສົມຜົນ ແລະ ແຜນພູມ." },
+      { en: "Print Layout with real page breaks, sections, headers and footers, columns, watermarks and page borders.", lo: "ມຸມມອງ Print Layout ພ້ອມການຂຶ້ນໜ້າໃໝ່ແທ້, ພາກ, ຫົວ ແລະ ທ້າຍເອກະສານ, ຖັນ, ລາຍນ້ຳ ແລະ ຂອບໜ້າ." },
+      { en: "Tables of contents, footnotes and endnotes, captions, citations, bibliography and index.", lo: "ສາລະບານ, ໝາຍເຫດທ້າຍໜ້າ ແລະ ທ້າຍເອກະສານ, ຄຳບັນຍາຍ, ການອ້າງອີງ, ບັນນານຸກົມ ແລະ ດັດຊະນີ." },
+      { en: "Track Changes, comments, Compare, spelling and grammar checks, and Version History on every save.", lo: "Track Changes, ຄຳເຫັນ, ການປຽບທຽບ, ກວດການສະກົດຄຳ ແລະ ໄວຍາກອນ, ແລະ ປະຫວັດເວີຊັນທຸກຄັ້ງທີ່ບັນທຶກ." },
+      { en: "Mail merge for letters, labels and envelopes.", lo: "ລວມຈົດໝາຍ (Mail merge) ສຳລັບຈົດໝາຍ, ປ້າຍ ແລະ ຊອງຈົດໝາຍ." },
+      { en: "Built-in Lao fonts (Phetsarath OT and Noto Sans Lao).", lo: "ມີຟອນພາສາລາວໃນຕົວ (Phetsarath OT ແລະ Noto Sans Lao)." },
     ],
     files: {
       "mac-arm64": { file: "DocBase-1.0.0-mac-arm64.dmg", size: "129 MB" },
@@ -119,8 +121,8 @@ export function isPlatformId(value: string): value is PlatformId {
   return value in PLATFORMS;
 }
 
-export function formatDate(iso: string): string {
-  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+export function formatDate(iso: string, locale: Locale = "en"): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(INTL_LOCALE[locale], {
     year: "numeric",
     month: "long",
     day: "numeric",

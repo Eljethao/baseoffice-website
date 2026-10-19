@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/locale-link";
 import { ArrowRight, History, Laptop, UserRoundX, type LucideIcon } from "lucide-react";
 import { AppCard } from "@/components/app-card";
 import { AppWindow } from "@/components/app-window";
@@ -7,26 +7,15 @@ import { DownloadButtons } from "@/components/download-buttons";
 import { ProductIcon } from "@/components/product-icon";
 import { CATEGORIES, PRODUCTS, appHref, getProduct, type CategoryId, type Product } from "@/lib/products";
 import { RELEASES, latestRelease, versionsHref, type Release } from "@/lib/releases";
+import { tr } from "@/lib/i18n";
+import { getDictionary } from "@/lib/locale";
+import { site } from "@/lib/site";
 
-const PROMISES: { icon: LucideIcon; title: string; text: string }[] = [
-  {
-    icon: Laptop,
-    title: "Made for your computer",
-    text: "Real desktop apps for macOS, on Apple Silicon and Intel, and for Windows.",
-  },
-  {
-    icon: UserRoundX,
-    title: "No account needed",
-    text: "Download and start working. No sign-up, no sign-in, and your files stay on your computer.",
-  },
-  {
-    icon: History,
-    title: "Every version, kept",
-    text: "Need an older version? Each app keeps every release, with notes on what changed.",
-  },
-];
+/** Icons for the three promises; their text is in the dictionary (home.promises), in the same order. */
+const PROMISE_ICONS: LucideIcon[] = [Laptop, UserRoundX, History];
 
-export default function Home() {
+export default async function Home() {
+  const { locale, t } = await getDictionary();
   const newest = RELEASES[0];
   const newestApp = newest && getProduct(newest.product);
   const showcased = PRODUCTS.flatMap((app) => {
@@ -34,7 +23,12 @@ export default function Home() {
     return app.status === "available" && release ? [{ app, release }] : [];
   });
   const categories = (Object.keys(CATEGORIES) as CategoryId[])
-    .map((id) => ({ id, ...CATEGORIES[id], apps: PRODUCTS.filter((p) => p.category === id) }))
+    .map((id) => ({
+      id,
+      name: tr(CATEGORIES[id].name, locale),
+      summary: tr(CATEGORIES[id].summary, locale),
+      apps: PRODUCTS.filter((p) => p.category === id),
+    }))
     .filter((c) => c.apps.length > 0);
 
   return (
@@ -56,27 +50,26 @@ export default function Home() {
             >
               <ProductIcon id={newestApp.id} size={22} />
               <span>
-                <span className="font-medium text-foreground">New:</span> {newestApp.name} {newest.version} is here
+                <span className="font-medium text-foreground">{t.home.newLabel}</span> {t.home.isHere(newestApp.name, newest.version)}
               </span>
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           )}
           <h1 className="mx-auto mt-8 max-w-4xl text-5xl leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-7xl">
-            Desktop apps,
+            {t.home.heroLine1}
             <br />
-            <span className="text-[#8b8f99]">beautifully simple.</span>
+            <span className="text-[#8b8f99]">{t.home.heroLine2}</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted">
-            Base Store is the home of apps made by LJ Thao for Mac and Windows. Download them straight to your
-            computer, with no account and no sign-in.
+            {t.home.heroText(site.author)}
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="#apps" className={buttonClass("primary", "lg")}>
-              Browse apps
+              {t.header.browseApps}
             </Link>
             {showcased[0] && (
               <Link href={appHref(showcased[0].app.id)} className={buttonClass("secondary", "lg")}>
-                Get {showcased[0].app.name}
+                {t.home.getApp(showcased[0].app.name)}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             )}
@@ -94,7 +87,7 @@ export default function Home() {
                   </span>
                   <span className="text-xs font-medium text-muted group-hover:text-foreground">
                     {p.name}
-                    {p.status === "coming-soon" && <span className="text-faint"> · Soon</span>}
+                    {p.status === "coming-soon" && <span className="text-faint"> · {t.home.soon}</span>}
                   </span>
                 </Link>
               </li>
@@ -106,10 +99,10 @@ export default function Home() {
       {showcased.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
           <div className="mb-10 max-w-2xl">
-            <p className="text-sm font-medium text-link">Featured</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Built for real work</h2>
+            <p className="text-sm font-medium text-link">{t.home.featured}</p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{t.home.featuredTitle}</h2>
             <p className="mt-3 text-muted">
-              Full-featured apps that open the files you already have and work without an internet connection.
+              {t.home.featuredText}
             </p>
           </div>
           <div className="space-y-6">
@@ -123,8 +116,8 @@ export default function Home() {
       <section id="apps" className="border-t border-black/[0.06] bg-subtle">
         <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-medium text-link">The store</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">All apps</h2>
+            <p className="text-sm font-medium text-link">{t.home.theStore}</p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{t.home.allApps}</h2>
           </div>
           {categories.map((c) => (
             <div key={c.id} id={c.id} className="mt-12">
@@ -144,7 +137,9 @@ export default function Home() {
 
       <section className="border-t border-black/[0.06]">
         <div className="mx-auto grid max-w-6xl gap-5 px-4 py-24 sm:px-6 md:grid-cols-3">
-          {PROMISES.map(({ icon: Icon, title, text }) => (
+          {t.home.promises.map(({ title, text }, i) => {
+            const Icon = PROMISE_ICONS[i];
+            return (
             <div key={title} className="rounded-3xl border border-black/[0.06] bg-white p-7 shadow-soft">
               <div className="flex size-11 items-center justify-center rounded-2xl bg-subtle text-foreground ring-1 ring-black/[0.06]">
                 <Icon className="size-5" aria-hidden="true" />
@@ -152,20 +147,22 @@ export default function Home() {
               <h3 className="mt-5 font-semibold tracking-tight">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </>
   );
 }
 
-function Showcase({ app, release, flip }: { app: Product; release: Release; flip: boolean }) {
+async function Showcase({ app, release, flip }: { app: Product; release: Release; flip: boolean }) {
+  const { locale, t } = await getDictionary();
   return (
     <div className="grid overflow-hidden rounded-[2rem] border border-black/[0.06] bg-white shadow-soft lg:grid-cols-2">
       <div className={`flex flex-col justify-center p-8 sm:p-12 ${flip ? "lg:order-2" : ""}`}>
         <p className="flex items-center gap-2 text-sm font-medium text-muted">
           <span className="size-2 rounded-full" style={{ background: app.accent }} />
-          {app.kind} · {CATEGORIES[app.category].name}
+          {tr(app.kind, locale)} · {tr(CATEGORIES[app.category].name, locale)}
         </p>
         <div className="mt-6 flex items-center gap-4">
           <span className="drop-shadow-[0_10px_18px_rgb(15_15_25/0.18)]">
@@ -173,17 +170,25 @@ function Showcase({ app, release, flip }: { app: Product; release: Release; flip
           </span>
           <h3 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{app.name}</h3>
         </div>
-        <p className="mt-5 max-w-md text-lg leading-relaxed text-pretty text-muted">{app.tagline}</p>
+        <p className="mt-5 max-w-md text-lg leading-relaxed text-pretty text-muted">{tr(app.tagline, locale)}</p>
         <div className="mt-8">
-          <DownloadButtons product={app.id} productName={app.name} release={release} align="start" size="md" />
+          <DownloadButtons
+            product={app.id}
+            productName={app.name}
+            release={release}
+            locale={locale}
+            text={t.download}
+            align="start"
+            size="md"
+          />
         </div>
         <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
           <Link href={appHref(app.id)} className="group inline-flex items-center gap-1 text-foreground">
-            Explore {app.name}
+            {t.home.explore(app.name)}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
           </Link>
           <Link href={versionsHref(app.id, release)} className="text-muted hover:text-foreground">
-            What&apos;s new in {release.version}
+            {t.home.whatsNewIn(release.version)}
           </Link>
         </div>
       </div>
@@ -199,7 +204,7 @@ function Showcase({ app, release, flip }: { app: Product; release: Release; flip
             className="bg-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_80%)]"
           />
           <div className="absolute top-10 left-10 w-[160%] sm:top-12 sm:left-12 sm:w-[130%] lg:w-[150%]">
-            <AppWindow {...app.screenshot} sizes="(min-width: 1024px) 860px, 160vw" />
+            <AppWindow {...app.screenshot} alt={tr(app.screenshot.alt, locale)} sizes="(min-width: 1024px) 860px, 160vw" />
           </div>
         </div>
       )}

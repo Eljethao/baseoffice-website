@@ -1,4 +1,5 @@
 import { cacheLife } from "next/cache";
+import { INTL_LOCALE, keepLaoWords, type Locale } from "./i18n";
 import { releasesFor, type Release } from "./releases";
 
 /** "owner/repo" when DOWNLOAD_URL_TEMPLATE points at GitHub Releases. */
@@ -58,8 +59,12 @@ export async function releaseDownloads(release: Release): Promise<number> {
   return total(await fileDownloads(), [release]);
 }
 
-/** "1,234 downloads", or "1.2K downloads" when compact. */
-export function formatDownloads(count: number, compact = false): string {
-  const number = new Intl.NumberFormat("en-US", compact ? { notation: "compact", maximumFractionDigits: 1 } : {});
-  return `${number.format(count)} ${count === 1 ? "download" : "downloads"}`;
+/** "1,234 downloads" ("ດາວໂຫຼດ 1.234 ຄັ້ງ" in Lao), or "1.2K downloads" when compact. */
+export function formatDownloads(count: number, locale: Locale, compact = false): string {
+  const number = new Intl.NumberFormat(
+    INTL_LOCALE[locale],
+    compact ? { notation: "compact", maximumFractionDigits: 1 } : {},
+  ).format(count);
+  if (locale === "lo") return keepLaoWords(`ດາວໂຫຼດ ${number} ຄັ້ງ`);
+  return `${number} ${count === 1 ? "download" : "downloads"}`;
 }

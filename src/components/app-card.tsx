@@ -1,15 +1,18 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "./locale-link";
 import { ArrowRight } from "lucide-react";
 import { ProductIcon } from "./product-icon";
 import { CATEGORIES, appHref, type Product } from "@/lib/products";
 import { appDownloads, formatDownloads } from "@/lib/downloads";
 import { latestRelease } from "@/lib/releases";
+import { tr } from "@/lib/i18n";
+import { getDictionary } from "@/lib/locale";
 
 /** A store listing tile that links to the app's page. */
 export async function AppCard({ app }: { app: Product }) {
   const release = latestRelease(app.id);
   const downloads = await appDownloads(app.id);
   const available = app.status === "available" && release;
+  const { locale, t } = await getDictionary();
 
   return (
     <Link
@@ -27,23 +30,23 @@ export async function AppCard({ app }: { app: Product }) {
         </span>
         {!available && (
           <span className="rounded-full border border-black/[0.08] bg-white px-2.5 py-0.5 text-xs font-medium text-muted">
-            Coming soon
+            {t.appCard.comingSoon}
           </span>
         )}
       </div>
       <h3 className="relative mt-5 text-lg font-semibold tracking-tight">{app.name}</h3>
       <p className="relative text-sm text-muted">
-        {app.kind} · {CATEGORIES[app.category].name}
+        {tr(app.kind, locale)} · {tr(CATEGORIES[app.category].name, locale)}
       </p>
-      <p className="relative mt-3 flex-1 text-sm leading-relaxed text-muted">{app.tagline}</p>
+      <p className="relative mt-3 flex-1 text-sm leading-relaxed text-muted">{tr(app.tagline, locale)}</p>
       <div className="relative mt-6 flex items-center justify-between border-t border-black/[0.06] pt-4 text-sm">
         <span className="text-faint">
           {available
-            ? `Version ${release.version}${downloads > 0 ? ` · ${formatDownloads(downloads, true)}` : ""}`
-            : "In development"}
+            ? `${t.common.version(release.version)}${downloads > 0 ? ` · ${formatDownloads(downloads, locale, true)}` : ""}`
+            : t.appCard.inDevelopment}
         </span>
         <span className="inline-flex items-center gap-1 rounded-full bg-subtle px-3 py-1 font-medium transition-colors group-hover:bg-ink group-hover:text-white">
-          {available ? "Get" : "Details"}
+          {available ? t.appCard.get : t.appCard.details}
           <ArrowRight className="size-3.5" aria-hidden="true" />
         </span>
       </div>

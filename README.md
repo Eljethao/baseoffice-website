@@ -38,9 +38,16 @@ npm run lint
 2. Upload them where the site can link to them. With GitHub Releases, use the tag `<app>-v<version>`, e.g.
    `docbase-v1.1.0`.
 3. Add a new entry at the **top** of `RELEASES` in `src/lib/releases.ts`: app, version, date, notes, and the file name
-   for each platform (`mac-arm64`, `mac-x64`, `win-x64`). Optionally add `size`.
+   for each platform (`mac-arm64`, `mac-x64`, `win-x64`). Optionally add `size`. Write the summary and notes as
+   `{ en: "...", lo: "..." }` to give them a Lao translation; plain strings show in English on both versions of the site.
 4. Redeploy. The download buttons and the `/download/...` links point to the new files. Keep the older entries (and
    their files) so they stay downloadable from the app's versions page.
+
+## Languages
+
+The site is in English (`/apps/docbase`) and Lao (`/lo/apps/docbase`), with an EN | ລາວ switch in the header that
+remembers the choice. Interface text is in `src/lib/dictionaries/` (`en.ts`, `lo.ts`); app and release text in
+`products.ts` and `releases.ts` takes `{ en, lo }` wherever it is translated.
 
 ## Configuration
 

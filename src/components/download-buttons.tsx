@@ -5,31 +5,33 @@ import { OSLogo } from "./icons";
 import { buttonClass } from "./button";
 import { usePlatform } from "./use-platform";
 import type { ProductId } from "@/lib/products";
+import { localePath, type Locale } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/dictionaries/en";
 import { PLATFORMS, latestLink, versionsHref, type PlatformId, type Release } from "@/lib/releases";
 
 interface Props {
   product: ProductId;
   productName: string;
   release: Release;
+  locale: Locale;
+  /** The dictionary's download strings, passed down from the server. */
+  text: Dictionary["download"];
   align?: "center" | "start";
   size?: "md" | "lg";
 }
 
-const LABELS: Record<PlatformId, string> = {
-  "mac-arm64": "Mac (Apple Silicon)",
-  "mac-x64": "Mac (Intel)",
-  "win-x64": "Windows",
-};
+/** Button order; never changes, so nothing moves under the cursor. */
+const ORDER: PlatformId[] = ["mac-arm64", "mac-x64", "win-x64"];
 
 /**
  * One download button per file of the latest version, always in the same order so nothing moves under the cursor.
  * The button for the visitor's own platform is highlighted; before hydration (and on phones) Apple Silicon is.
  */
-export function DownloadButtons({ product, productName, release, align = "center", size = "lg" }: Props) {
+export function DownloadButtons({ product, productName, release, locale, text, align = "center", size = "lg" }: Props) {
   const platform = usePlatform();
   const mine: PlatformId =
     platform?.os === "windows" ? "win-x64" : platform?.os === "mac" && platform.arch === "x64" ? "mac-x64" : "mac-arm64";
-  const ids = (Object.keys(LABELS) as PlatformId[]).filter((id) => release.files[id]);
+  const ids = ORDER.filter((id) => release.files[id]);
   const start = align === "start";
 
   return (
@@ -44,7 +46,7 @@ export function DownloadButtons({ product, productName, release, align = "center
               className={buttonClass(id === mine ? "primary" : "secondary", size)}
             >
               <OSLogo os={PLATFORMS[id].os} className={size === "lg" ? "size-[18px]" : "size-4"} />
-              {LABELS[id]}
+              {text.labels[id]}
               {fileSize && <span className="font-normal opacity-60">{fileSize}</span>}
             </a>
           );
@@ -52,10 +54,10 @@ export function DownloadButtons({ product, productName, release, align = "center
       </div>
       <p className="text-[13px] text-balance text-faint">
         {productName} {release.version}
-        {ids.includes("mac-x64") && <> · Apple Silicon is for Macs with an M-series chip; older Macs use Intel</>}
+        {ids.includes("mac-x64") && <> · {text.archHint}</>}
         {" · "}
-        <Link href={versionsHref(product)} className="font-medium text-muted underline decoration-black/20 underline-offset-[3px] hover:text-foreground">
-          All versions
+        <Link href={localePath(locale, versionsHref(product))} className="font-medium text-muted underline decoration-black/20 underline-offset-[3px] hover:text-foreground">
+          {text.allVersions}
         </Link>
       </p>
     </div>

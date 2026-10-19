@@ -45,62 +45,91 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
   const category = CATEGORIES[app.category];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-      <Link href={`/#${app.category}`} className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
-        <ChevronLeft className="size-4" aria-hidden="true" />
-        {category.name} apps
-      </Link>
+    <>
+      <section className="relative isolate overflow-hidden border-b border-black/[0.06]">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10"
+          style={{
+            background: `radial-gradient(70% 60% at 15% 0%, ${app.accent}1f, transparent 70%), radial-gradient(60% 50% at 100% 10%, rgb(79 70 229 / 0.07), transparent 70%)`,
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="bg-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_80%_60%_at_30%_0%,black,transparent)]"
+        />
+        <div className="mx-auto max-w-6xl px-4 pt-10 pb-16 sm:px-6 sm:pt-14">
+          <Link
+            href={`/#${app.category}`}
+            className="inline-flex items-center gap-1 rounded-full py-1 pr-3 text-sm text-muted transition-colors hover:text-foreground"
+          >
+            <ChevronLeft className="size-4" aria-hidden="true" />
+            {category.name} apps
+          </Link>
 
-      <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start">
-        <ProductIcon id={app.id} size={112} />
-        <div className="flex-1">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{app.name}</h1>
-          <p className="mt-1 text-muted">
-            {app.kind} · {category.name} · by{" "}
-            <a href={site.authorUrl} className="hover:text-foreground hover:underline">
-              {site.author}
-            </a>
-            {downloads > 0 && <> · {formatDownloads(downloads)}</>}
-          </p>
-          <p className="mt-4 max-w-2xl text-lg text-pretty">{app.tagline}</p>
-          <div className="mt-6">
+          <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-center">
+            <span className="w-fit drop-shadow-[0_16px_28px_rgb(15_15_25/0.2)]">
+              <ProductIcon id={app.id} size={128} />
+            </span>
+            <div className="flex-1">
+              <h1 className="text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">{app.name}</h1>
+              <ul className="mt-4 flex flex-wrap gap-2 text-sm">
+                <Chip>
+                  <span className="size-1.5 rounded-full" style={{ background: app.accent }} />
+                  {app.kind}
+                </Chip>
+                <Chip>{category.name}</Chip>
+                <Chip>
+                  by{" "}
+                  <a href={site.authorUrl} className="font-medium text-foreground hover:underline">
+                    {site.author}
+                  </a>
+                </Chip>
+                {downloads > 0 && <Chip>{formatDownloads(downloads)}</Chip>}
+              </ul>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-muted">{app.tagline}</p>
+            </div>
+          </div>
+
+          <div className="mt-10">
             {release ? (
               <DownloadButtons product={app.id} productName={app.name} release={release} align="start" />
             ) : (
-              <p className="inline-flex rounded-full border border-border px-3 py-1 text-sm font-medium text-muted">
+              <p className="inline-flex rounded-full border border-black/[0.08] bg-white px-4 py-2 text-sm font-medium text-muted shadow-soft">
                 Coming soon
               </p>
             )}
           </div>
-        </div>
-      </div>
 
-      {app.screenshot && (
-        <div className="mt-12">
-          <AppWindow {...app.screenshot} />
+          {app.screenshot && (
+            <div className="mt-14">
+              <AppWindow {...app.screenshot} />
+            </div>
+          )}
         </div>
-      )}
+      </section>
 
-      <div className="mt-14 grid gap-14 lg:grid-cols-[1fr_320px]">
-        <div className="min-w-0 space-y-14">
+      <div className="mx-auto grid max-w-6xl gap-14 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1fr_340px]">
+        <div className="min-w-0 space-y-16">
           <section>
-            <h2 className="text-2xl font-semibold tracking-tight">About {app.name}</h2>
-            <p className="mt-4 text-pretty text-muted">{app.description}</p>
+            <SectionTitle>About {app.name}</SectionTitle>
+            <p className="mt-4 text-lg leading-relaxed text-pretty text-muted">{app.description}</p>
           </section>
 
           {app.features && (
             <section>
-              <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
-              <div className="mt-6 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+              <SectionTitle>Features</SectionTitle>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {app.features.map(({ icon: Icon, title, text }) => (
-                  <div key={title} className="flex gap-4">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-link">
+                  <div key={title} className="rounded-2xl border border-black/[0.06] bg-white p-5 shadow-soft">
+                    <div
+                      className="flex size-10 items-center justify-center rounded-xl ring-1 ring-black/[0.06]"
+                      style={{ background: `${app.accent}12`, color: app.accent }}
+                    >
                       <Icon className="size-5" aria-hidden="true" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold">{title}</h3>
-                      <p className="mt-1 text-sm text-muted">{text}</p>
-                    </div>
+                    <h3 className="mt-4 font-semibold tracking-tight">{title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{text}</p>
                   </div>
                 ))}
               </div>
@@ -109,8 +138,8 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
 
           {app.formats && (
             <section>
-              <h2 className="text-2xl font-semibold tracking-tight">File formats</h2>
-              <div className="mt-6 grid gap-6 rounded-2xl border border-border bg-subtle p-6 sm:grid-cols-2">
+              <SectionTitle>File formats</SectionTitle>
+              <div className="mt-6 grid gap-6 rounded-2xl border border-black/[0.06] bg-subtle p-6 sm:grid-cols-2">
                 <FormatList label="Opens" formats={app.formats.opens} />
                 <FormatList label="Saves and exports" formats={app.formats.saves} />
                 {app.formats.note && <p className="text-xs text-muted sm:col-span-2">{app.formats.note}</p>}
@@ -121,33 +150,51 @@ export default async function AppPage({ params }: PageProps<"/apps/[id]">) {
           {release && (
             <section>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="text-2xl font-semibold tracking-tight">What&apos;s new</h2>
-                <Link href={versionsHref(app.id)} className="text-sm font-medium text-link hover:underline">
+                <SectionTitle>What&apos;s new</SectionTitle>
+                <Link href={versionsHref(app.id)} className="group inline-flex items-center gap-1 text-sm font-medium">
                   Version history
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </div>
-              <p className="mt-2 text-sm text-muted">
-                Version {release.version} · <time dateTime={release.date}>{formatDate(release.date)}</time>
-              </p>
-              <p className="mt-4">{release.summary}</p>
-              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted marker:text-border">
-                {release.notes.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
+              <div className="mt-6 rounded-2xl border border-black/[0.06] bg-white p-6 shadow-soft">
+                <p className="text-sm text-faint">
+                  Version {release.version} · <time dateTime={release.date}>{formatDate(release.date)}</time>
+                </p>
+                <p className="mt-2 font-medium">{release.summary}</p>
+                <ul className="mt-4 space-y-2.5 text-sm text-muted">
+                  {release.notes.map((note) => (
+                    <li key={note} className="flex gap-3">
+                      <span className="mt-2 size-1 shrink-0 rounded-full bg-black/30" />
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </section>
           )}
 
           {release && <InstallSteps app={app} />}
         </div>
 
-        <aside className="space-y-6">
+        <aside className="space-y-5">
           {release && <DownloadsCard release={release} />}
           <InfoCard app={app} release={release} downloads={downloads} />
         </aside>
       </div>
-    </div>
+    </>
   );
+}
+
+function Chip({ children }: { children: ReactNode }) {
+  return (
+    <li className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.07] bg-white/80 px-3 py-1 text-muted backdrop-blur">
+      {children}
+    </li>
+  );
+}
+
+function SectionTitle({ children }: { children: ReactNode }) {
+  return <h2 className="text-2xl font-semibold tracking-[-0.03em] sm:text-[28px]">{children}</h2>;
 }
 
 function DownloadsCard({ release }: { release: Release }) {
@@ -157,9 +204,9 @@ function DownloadsCard({ release }: { release: Release }) {
   ];
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
-      <h2 className="font-semibold">Downloads</h2>
-      <p className="text-sm text-muted">Version {release.version}</p>
+    <div className="rounded-3xl border border-black/[0.06] bg-white p-6 shadow-soft">
+      <h2 className="font-semibold tracking-tight">Downloads</h2>
+      <p className="text-sm text-faint">Version {release.version}</p>
       {groups.map(({ os, ids }) => {
         const available = ids.filter((id) => release.files[id]);
         if (available.length === 0) return null;
@@ -172,20 +219,20 @@ function DownloadsCard({ release }: { release: Release }) {
                 <RecommendedBadge os={os} />
               </span>
             </h3>
-            <div className="mt-2 flex flex-col gap-2">
+            <div className="mt-2.5 flex flex-col gap-2">
               {available.map((id) => {
                 const { arch, ext } = PLATFORMS[id];
                 const size = release.files[id]!.size;
                 return (
-                  <a key={id} href={latestLink(release.product, id)} className={buttonClass("secondary", "md")}>
+                  <a key={id} href={latestLink(release.product, id)} className={`${buttonClass("secondary", "md")} justify-between!`}>
                     <span>
                       {os === "mac" ? arch : `${arch} installer`}{" "}
-                      <span className="font-normal text-muted">
+                      <span className="font-normal text-faint">
                         {ext}
                         {size && ` · ${size}`}
                       </span>
                     </span>
-                    <Download className="size-4 text-muted" aria-hidden="true" />
+                    <Download className="size-4 text-faint" aria-hidden="true" />
                   </a>
                 );
               })}
@@ -193,16 +240,16 @@ function DownloadsCard({ release }: { release: Release }) {
           </div>
         );
       })}
-      <p className="mt-4 text-xs text-muted">
+      <p className="mt-5 rounded-xl bg-subtle p-3 text-xs leading-relaxed text-muted">
         Not sure which Mac you have? Open Apple menu › About This Mac. “Chip: Apple M…” means Apple Silicon;
         “Processor: Intel” means Intel.
       </p>
       <Link
         href={versionsHref(release.product)}
-        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-link hover:underline"
+        className="group mt-4 inline-flex items-center gap-1 text-sm font-medium"
       >
         Older versions
-        <ArrowRight className="size-4" aria-hidden="true" />
+        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
       </Link>
     </div>
   );
@@ -210,7 +257,7 @@ function DownloadsCard({ release }: { release: Release }) {
 
 function InfoCard({ app, release, downloads }: { app: Product; release?: Release; downloads: number }) {
   const rows: [string, ReactNode][] = [
-    ["Developer", <a key="dev" href={site.authorUrl} className="text-link hover:underline">{site.author}</a>],
+    ["Developer", <a key="dev" href={site.authorUrl} className="font-medium text-link hover:underline">{site.author}</a>],
     ["Category", CATEGORIES[app.category].name],
   ];
   if (release) {
@@ -225,12 +272,12 @@ function InfoCard({ app, release, downloads }: { app: Product; release?: Release
   if (release) rows.push(["Account", "Not needed"]);
 
   return (
-    <div className="rounded-2xl border border-border p-6">
-      <h2 className="font-semibold">Information</h2>
-      <dl className="mt-4 divide-y divide-border text-sm">
+    <div className="rounded-3xl border border-black/[0.06] bg-white p-6 shadow-soft">
+      <h2 className="font-semibold tracking-tight">Information</h2>
+      <dl className="mt-3 divide-y divide-black/[0.06] text-sm">
         {rows.map(([label, value]) => (
-          <div key={label} className="flex gap-4 py-2.5">
-            <dt className="w-24 shrink-0 text-muted">{label}</dt>
+          <div key={label} className="flex gap-4 py-3">
+            <dt className="w-24 shrink-0 text-faint">{label}</dt>
             <dd className="min-w-0">{value}</dd>
           </div>
         ))}
@@ -261,26 +308,26 @@ function InstallSteps({ app }: { app: Product }) {
 
   return (
     <section>
-      <h2 className="text-2xl font-semibold tracking-tight">Installing {app.name}</h2>
-      <div className="mt-6 grid gap-8 md:grid-cols-2">
+      <SectionTitle>Installing {app.name}</SectionTitle>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
         {(Object.keys(install) as OS[]).map((os) => (
-          <div key={os}>
-            <h3 className="flex items-center gap-2 font-semibold">
+          <div key={os} className="flex flex-col rounded-2xl border border-black/[0.06] bg-white p-6 shadow-soft">
+            <h3 className="flex items-center gap-2 font-semibold tracking-tight">
               <OSLogo os={os} className="size-4" />
               {os === "mac" ? "macOS" : "Windows"}
             </h3>
-            <ol className="mt-4 space-y-3">
+            <ol className="mt-5 flex-1 space-y-3.5">
               {install[os].steps.map((step, i) => (
                 <li key={step} className="flex gap-3 text-sm">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-semibold text-link">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">
                     {i + 1}
                   </span>
                   <span className="pt-0.5">{step}</span>
                 </li>
               ))}
             </ol>
-            <p className="mt-4 flex gap-2 rounded-lg border border-border bg-subtle p-3 text-sm text-muted">
-              <Info className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            <p className="mt-5 flex gap-2 rounded-xl bg-subtle p-3 text-xs leading-relaxed text-muted">
+              <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
               {install[os].warning}
             </p>
           </div>
@@ -296,7 +343,10 @@ function FormatList({ label, formats }: { label: string; formats: string[] }) {
       <h3 className="text-sm font-semibold">{label}</h3>
       <ul className="mt-3 flex flex-wrap gap-2">
         {formats.map((f) => (
-          <li key={f} className="rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs">
+          <li
+            key={f}
+            className="rounded-lg border border-black/[0.07] bg-white px-2.5 py-1 font-mono text-xs shadow-[0_1px_1px_rgb(15_15_25/0.04)]"
+          >
             {f}
           </li>
         ))}

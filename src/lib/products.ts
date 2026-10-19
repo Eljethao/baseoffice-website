@@ -35,6 +35,8 @@ export interface Product {
   /** The "About" paragraph on the app page. */
   description: string;
   status: "available" | "coming-soon";
+  /** The app's colour, used to tint its showcase panel and page header. */
+  accent: string;
   screenshot?: { src: string; alt: string; title: string; width: number; height: number };
   features?: Feature[];
   formats?: { opens: string[]; saves: string[]; note?: string };
@@ -47,6 +49,7 @@ export const PRODUCTS: Product[] = [
     name: "DocBase",
     category: "office",
     kind: "Word processor",
+    accent: "#2563eb",
     tagline: "A full word processor for letters, reports and books. Opens and saves Word documents.",
     description:
       "DocBase is a desktop word processor that opens and saves Word files and works without an internet connection. It has the tools of a full word processor in a familiar ribbon with File, Home, Insert, Design, Layout, References, Review, View and Mailings tabs.",
@@ -112,6 +115,7 @@ export const PRODUCTS: Product[] = [
     name: "SheetBase",
     category: "office",
     kind: "Spreadsheet",
+    accent: "#16a34a",
     tagline: "A full spreadsheet for budgets, lists and data. Opens and saves Excel workbooks.",
     description:
       "SheetBase is a desktop spreadsheet that opens and saves Excel files and works without an internet connection. It has the tools of a full spreadsheet in a familiar ribbon with Home, Insert, Page Layout, Formulas, Data, Review and View tabs.",
@@ -162,6 +166,7 @@ export const PRODUCTS: Product[] = [
     name: "SlideBase",
     category: "office",
     kind: "Presentations",
+    accent: "#ea580c",
     tagline: "Build slide decks and present them full screen.",
     description: "SlideBase is a presentation app for building slide decks and presenting them full screen.",
     status: "coming-soon",

@@ -5,11 +5,15 @@ export function AppWindow({
   src,
   alt,
   title,
+  width,
+  height,
   sizes = "(min-width: 1152px) 1088px, 100vw",
 }: {
   src: string;
   alt: string;
   title: string;
+  width: number;
+  height: number;
   sizes?: string;
 }) {
   return (
@@ -24,8 +28,8 @@ export function AppWindow({
       <Image
         src={src}
         alt={alt}
-        width={2640}
-        height={1704}
+        width={width}
+        height={height}
         sizes={sizes}
         fetchPriority="high"
         className="block h-auto w-full"

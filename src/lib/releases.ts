@@ -35,6 +35,26 @@ export interface Release {
 /** Newest first. Add a new entry here for every release. */
 export const RELEASES: Release[] = [
   {
+    product: "sheetbase",
+    version: "1.0.0",
+    date: "2026-10-19",
+    summary: "The first release of SheetBase for macOS and Windows.",
+    notes: [
+      "Open and save Excel workbooks (.xlsx, .xlsm) with formulas, styles, number formats, merged cells, frozen panes, notes, data validation and conditional formatting.",
+      "418 built-in functions, including XLOOKUP, LET and dynamic arrays that spill (SEQUENCE, UNIQUE, SORT, FILTER).",
+      "Column, bar, line, area, pie, doughnut and scatter charts.",
+      "Sort, AutoFilter, Text to Columns, Remove Duplicates, Flash Fill, Goal Seek and PivotTables.",
+      "Format as Table, cell styles, and conditional formatting with data bars, colour scales and icon sets.",
+      "Templates for a monthly budget, invoice, to-do list, loan calculator and sales report.",
+      "Print and export to PDF, AutoRecover, and Version History on every save.",
+    ],
+    files: {
+      "mac-arm64": { file: "SheetBase-1.0.0-mac-arm64.dmg", size: "131 MB" },
+      "mac-x64": { file: "SheetBase-1.0.0-mac-x64.dmg", size: "138 MB" },
+      "win-x64": { file: "SheetBase-1.0.0-windows-setup.exe", size: "110 MB" },
+    },
+  },
+  {
     product: "docbase",
     version: "1.0.0",
     date: "2026-10-17",

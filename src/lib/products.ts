@@ -35,7 +35,7 @@ export interface Product {
   /** The "About" paragraph on the app page. */
   description: string;
   status: "available" | "coming-soon";
-  screenshot?: { src: string; alt: string; title: string };
+  screenshot?: { src: string; alt: string; title: string; width: number; height: number };
   features?: Feature[];
   formats?: { opens: string[]; saves: string[]; note?: string };
   languages?: string[];
@@ -55,6 +55,8 @@ export const PRODUCTS: Product[] = [
       src: "/screenshots/docbase.png",
       alt: "DocBase editing a report, with the Home ribbon, styles gallery and a page with headings, lists and a table",
       title: "Report.docx — DocBase",
+      width: 2640,
+      height: 1704,
     },
     features: [
       {
@@ -110,9 +112,50 @@ export const PRODUCTS: Product[] = [
     name: "SheetBase",
     category: "office",
     kind: "Spreadsheet",
-    tagline: "Tables, formulas and charts for budgets, lists and data.",
-    description: "SheetBase is a spreadsheet app for budgets, lists and data, with formulas and charts.",
-    status: "coming-soon",
+    tagline: "A full spreadsheet for budgets, lists and data. Opens and saves Excel workbooks.",
+    description:
+      "SheetBase is a desktop spreadsheet that opens and saves Excel files and works without an internet connection. It has the tools of a full spreadsheet in a familiar ribbon with Home, Insert, Page Layout, Formulas, Data, Review and View tabs.",
+    status: "available",
+    screenshot: {
+      src: "/screenshots/sheetbase.png",
+      alt: "SheetBase showing a quarterly sales sheet with formatted headers, totals and a column chart",
+      title: "Sales.xlsx — SheetBase",
+      width: 2560,
+      height: 1640,
+    },
+    features: [
+      {
+        icon: FileText,
+        title: "Works with Excel files",
+        text: "Open and save .xlsx with formulas, number formats, styles, merged cells, frozen panes, notes, validation and conditional formatting intact.",
+      },
+      {
+        icon: ChartColumn,
+        title: "418 functions and charts",
+        text: "Math, statistics, text, lookup (XLOOKUP, INDEX/MATCH), dates, financial and more, with dynamic arrays that spill. Column, bar, line, area, pie and scatter charts.",
+      },
+      {
+        icon: Columns3,
+        title: "Data tools",
+        text: "Sort, AutoFilter, Text to Columns, Remove Duplicates, Flash Fill, Data Validation, Goal Seek and PivotTables.",
+      },
+      {
+        icon: BookOpen,
+        title: "Formatting you expect",
+        text: "Number formats, borders, cell styles, Format as Table, conditional formatting with data bars, colour scales and icon sets.",
+      },
+      {
+        icon: ShieldCheck,
+        title: "Private by design",
+        text: "No account and no sign-in. SheetBase works offline and your workbooks stay on your computer.",
+      },
+    ],
+    formats: {
+      opens: ["XLSX", "XLSM", "CSV", "TSV", "TXT", "SBX"],
+      saves: ["XLSX", "SBX", "CSV", "TSV", "HTML", "PDF"],
+      note: "SBX is SheetBase's own format; it also keeps charts, which Excel files from SheetBase do not include.",
+    },
+    languages: ["English"],
   },
   {
     id: "slidebase",

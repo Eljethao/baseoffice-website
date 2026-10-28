@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement>;
@@ -22,15 +23,7 @@ export function OSLogo({ os, ...props }: IconProps & { os: "mac" | "windows" }) 
   return os === "mac" ? <AppleLogo {...props} /> : <WindowsLogo {...props} />;
 }
 
-/** Base Store mark: a grid of app tiles in the colours of DocBase, SheetBase and SlideBase, plus one for apps to come. */
-export function BaseStoreMark(props: IconProps) {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" {...props}>
-      <rect x="2" y="2" width="13" height="13" rx="3.5" fill="#2563eb" />
-      <rect x="17" y="2" width="13" height="13" rx="3.5" fill="#16a34a" />
-      <rect x="2" y="17" width="13" height="13" rx="3.5" fill="#ea580c" />
-      <rect x="17" y="17" width="13" height="13" rx="3.5" fill="#4f46e5" />
-      <path d="M23.5 20.5v6M20.5 23.5h6" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
-  );
+/** Base Store mark: a shop front over app tiles, the same artwork as the favicon (src/app/icon.png). */
+export function BaseStoreMark({ className }: { className?: string }) {
+  return <Image src="/store-icon.png" alt="" width={28} height={28} className={className} />;
 }

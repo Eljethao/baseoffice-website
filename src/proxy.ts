@@ -42,6 +42,6 @@ function preferredLocale(request: NextRequest): Locale {
 
 export const config = {
   // Skip Next internals, the /download/... redirects (next.config.ts) and any file with an extension:
-  // images in public/, icon.svg, robots.txt, sitemap.xml.
+  // images in public/, favicon.ico, icon.png, apple-icon.png, robots.txt, sitemap.xml.
   matcher: ["/((?!_next/|download(?:/|$)|releases$|.*\\..*).*)"],
 };

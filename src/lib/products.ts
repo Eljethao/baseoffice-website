@@ -6,7 +6,10 @@ import {
   Languages,
   Mail,
   MessageSquareText,
+  MonitorPlay,
+  Palette,
   ShieldCheck,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import type { Text } from "./i18n";
@@ -229,12 +232,76 @@ export const PRODUCTS: Product[] = [
     category: "office",
     kind: { en: "Presentations", lo: "ໂປຣແກຣມນຳສະເໜີ" },
     accent: "#ea580c",
-    tagline: { en: "Build slide decks and present them full screen.", lo: "ສ້າງສະໄລ້ ແລະ ນຳສະເໜີແບບເຕັມຈໍ." },
-    description: {
-      en: "SlideBase is a presentation app for building slide decks and presenting them full screen.",
-      lo: "SlideBase ເປັນແອັບນຳສະເໜີ ສຳລັບສ້າງສະໄລ້ ແລະ ນຳສະເໜີແບບເຕັມຈໍ.",
+    tagline: {
+      en: "Build slide decks and present them full screen. Opens and saves PowerPoint files.",
+      lo: "ສ້າງສະໄລ້ ແລະ ນຳສະເໜີແບບເຕັມຈໍ. ເປີດ ແລະ ບັນທຶກໄຟລ໌ PowerPoint ໄດ້.",
     },
-    status: "coming-soon",
+    description: {
+      en: "SlideBase is a desktop presentation app that opens and saves PowerPoint files and works without an internet connection. It has the tools of a full presentation app in a familiar ribbon with Home, Insert, Design, Transitions, Animations, Slide Show, Review and View tabs.",
+      lo: "SlideBase ເປັນໂປຣແກຣມນຳສະເໜີສຳລັບຄອມພິວເຕີ ທີ່ເປີດ ແລະ ບັນທຶກໄຟລ໌ PowerPoint ໄດ້ ແລະ ໃຊ້ງານໄດ້ໂດຍບໍ່ຕ້ອງເຊື່ອມຕໍ່ອິນເຕີເນັດ. ມີເຄື່ອງມືຄົບຄືກັບໂປຣແກຣມນຳສະເໜີເຕັມຮູບແບບ ໃນແຖບ Ribbon ທີ່ຄຸ້ນເຄີຍ ມີແຖບ Home, Insert, Design, Transitions, Animations, Slide Show, Review ແລະ View.",
+    },
+    status: "available",
+    screenshot: {
+      src: "/screenshots/slidebase.png",
+      alt: {
+        en: "SlideBase editing a project status deck, with the Home ribbon, slide thumbnails and a slide with a column chart",
+        lo: "SlideBase ກຳລັງແກ້ໄຂສະໄລ້ລາຍງານສະຖານະໂຄງການ ມີແຖບ Home, ຮູບຫຍໍ້ຂອງສະໄລ້ ແລະ ສະໄລ້ທີ່ມີແຜນພູມຖັນ",
+      },
+      title: "Project Status.pptx — SlideBase",
+      width: 2560,
+      height: 1576,
+    },
+    features: [
+      {
+        icon: FileText,
+        title: { en: "Works with PowerPoint files", lo: "ໃຊ້ກັບໄຟລ໌ PowerPoint ໄດ້" },
+        text: {
+          en: "Open and save .pptx with shapes, pictures, tables, charts, SmartArt, media, masters and layouts, transitions, animations, sections, notes and comments.",
+          lo: "ເປີດ ແລະ ບັນທຶກ .pptx ພ້ອມຮູບຮ່າງ, ຮູບພາບ, ຕາຕະລາງ, ແຜນພູມ, SmartArt, ວິດີໂອ ແລະ ສຽງ, ແມ່ແບບ ແລະ ໂຄງຮ່າງ, ການປ່ຽນສະໄລ້, ພາບເຄື່ອນໄຫວ, ພາກ, ບັນທຶກ ແລະ ຄຳເຫັນ.",
+        },
+      },
+      {
+        icon: Palette,
+        title: { en: "Designs and layouts", lo: "ດີໄຊນ໌ ແລະ ໂຄງຮ່າງ" },
+        text: {
+          en: "20 built-in designs with colour variants, slide layouts, themes, about 130 shapes, WordArt, icons and Slide Master view.",
+          lo: "ມີ 20 ແບບດີໄຊນ໌ໃນຕົວ ພ້ອມສີຫຼາຍແບບ, ໂຄງຮ່າງສະໄລ້, ທີມ, ຮູບຮ່າງປະມານ 130 ແບບ, WordArt, ໄອຄອນ ແລະ ມຸມມອງ Slide Master.",
+        },
+      },
+      {
+        icon: Sparkles,
+        title: { en: "Transitions and animations", lo: "ການປ່ຽນສະໄລ້ ແລະ ພາບເຄື່ອນໄຫວ" },
+        text: {
+          en: "45 transitions, and entrance, emphasis, exit and motion-path animations with timing, triggers and the Animation Pane.",
+          lo: "ການປ່ຽນສະໄລ້ 45 ແບບ ແລະ ພາບເຄື່ອນໄຫວແບບເຂົ້າ, ເນັ້ນ, ອອກ ແລະ ເຄື່ອນທີ່ຕາມເສັ້ນທາງ ພ້ອມການຕັ້ງເວລາ, ຕົວກະຕຸ້ນ ແລະ Animation Pane.",
+        },
+      },
+      {
+        icon: MonitorPlay,
+        title: { en: "Present with Presenter View", lo: "ນຳສະເໜີດ້ວຍ Presenter View" },
+        text: {
+          en: "Full-screen Slide Show with your notes, a timer and the next slide on a second screen, plus pen, highlighter and laser pointer.",
+          lo: "ສະແດງສະໄລ້ແບບເຕັມຈໍ ພ້ອມບັນທຶກ, ໂມງຈັບເວລາ ແລະ ສະໄລ້ຖັດໄປ ຢູ່ໜ້າຈໍທີສອງ, ມີປາກກາ, ປາກກາເນັ້ນຂໍ້ຄວາມ ແລະ ຕົວຊີ້ເລເຊີ.",
+        },
+      },
+      {
+        icon: ShieldCheck,
+        title: { en: "Private by design", lo: "ຮັກສາຄວາມເປັນສ່ວນຕົວ" },
+        text: {
+          en: "No account and no sign-in. SlideBase works offline and your presentations stay on your computer.",
+          lo: "ບໍ່ຕ້ອງມີບັນຊີ ແລະ ບໍ່ຕ້ອງເຂົ້າສູ່ລະບົບ. SlideBase ໃຊ້ງານແບບອອບລາຍ ແລະ ໄຟລ໌ຂອງທ່ານຢູ່ໃນຄອມພິວເຕີຂອງທ່ານເອງ.",
+        },
+      },
+    ],
+    formats: {
+      opens: ["PPTX", "PPSX", "POTX", "SBP"],
+      saves: ["PPTX", "PPSX", "POTX", "SBP", "PDF", "PNG", "JPEG"],
+      note: {
+        en: "SBP is SlideBase's own format. Outlines can also be saved as TXT or RTF.",
+        lo: "SBP ເປັນຮູບແບບໄຟລ໌ຂອງ SlideBase ເອງ. ໂຄງຮ່າງເນື້ອຫາ ບັນທຶກເປັນ TXT ຫຼື RTF ໄດ້ນຳ.",
+      },
+    },
+    languages: [{ en: "English", lo: "ອັງກິດ" }, { en: "Lao text", lo: "ຂໍ້ຄວາມພາສາລາວ" }],
   },
 ];
 

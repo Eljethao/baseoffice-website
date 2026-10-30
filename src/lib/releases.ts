@@ -37,6 +37,42 @@ export interface Release {
 /** Newest first. Add a new entry here for every release. */
 export const RELEASES: Release[] = [
   {
+    product: "slidebase",
+    version: "1.0.0",
+    date: "2026-10-30",
+    summary: { en: "The first release of SlideBase for macOS and Windows.", lo: "ເວີຊັນທຳອິດຂອງ SlideBase ສຳລັບ macOS ແລະ Windows." },
+    notes: [
+      { en: "Open and save PowerPoint presentations (.pptx, .ppsx, .potx) with shapes, pictures, tables, charts, transitions, animations and speaker notes.", lo: "ເປີດ ແລະ ບັນທຶກງານນຳສະເໜີ PowerPoint (.pptx, .ppsx, .potx) ພ້ອມຮູບຮ່າງ, ຮູບພາບ, ຕາຕະລາງ, ແຜນພູມ, ການປ່ຽນສະໄລ້, ພາບເຄື່ອນໄຫວ ແລະ ບັນທຶກຂອງຜູ້ນຳສະເໜີ." },
+      { en: "20 built-in designs, slide layouts, sections and Slide Master view.", lo: "ມີ 20 ແບບດີໄຊນ໌ໃນຕົວ, ໂຄງຮ່າງສະໄລ້, ພາກ ແລະ ມຸມມອງ Slide Master." },
+      { en: "45 transitions, and entrance, emphasis, exit and motion-path animations.", lo: "ການປ່ຽນສະໄລ້ 45 ແບບ ແລະ ພາບເຄື່ອນໄຫວແບບເຂົ້າ, ເນັ້ນ, ອອກ ແລະ ເຄື່ອນທີ່ຕາມເສັ້ນທາງ." },
+      { en: "Slide Show with Presenter View, pen and laser pointer, and rehearsed timings.", lo: "ສະແດງສະໄລ້ພ້ອມ Presenter View, ປາກກາ ແລະ ຕົວຊີ້ເລເຊີ, ແລະ ການຊ້ອມຈັບເວລາ." },
+      { en: "Export to PDF and images, AutoRecover, and Version History on every save.", lo: "ສົ່ງອອກເປັນ PDF ແລະ ຮູບພາບ, ກູ້ຄືນອັດຕະໂນມັດ (AutoRecover) ແລະ ປະຫວັດເວີຊັນທຸກຄັ້ງທີ່ບັນທຶກ." },
+      { en: "Built-in Lao fonts (Phetsarath OT and Noto Sans Lao).", lo: "ມີຟອນພາສາລາວໃນຕົວ (Phetsarath OT ແລະ Noto Sans Lao)." },
+    ],
+    files: {
+      "mac-arm64": { file: "SlideBase-1.0.0-mac-arm64.dmg", size: "127 MB" },
+      "mac-x64": { file: "SlideBase-1.0.0-mac-x64.dmg", size: "133 MB" },
+      "win-x64": { file: "SlideBase-1.0.0-windows-setup.exe", size: "114 MB" },
+    },
+  },
+  {
+    product: "docbase",
+    version: "1.0.1",
+    date: "2026-10-30",
+    summary: { en: "Word documents with tables now open with the right layout.", lo: "ເອກະສານ Word ທີ່ມີຕາຕະລາງ ເປີດໄດ້ຖືກຮູບແບບແລ້ວ." },
+    notes: [
+      { en: "Table rows break across pages like in Word, so documents no longer open with hundreds of pages when a row is taller than a page.", lo: "ແຖວຕາຕະລາງແບ່ງຂ້າມໜ້າໄດ້ຄືກັບ Word, ເອກະສານຈຶ່ງບໍ່ເປີດອອກມາເປັນຫຼາຍຮ້ອຍໜ້າ ເມື່ອມີແຖວທີ່ສູງກວ່າໜຶ່ງໜ້າ." },
+      { en: "Tables keep their column widths when the first row has merged cells.", lo: "ຕາຕະລາງຮັກສາຄວາມກວ້າງຂອງຖັນໄວ້ ເມື່ອແຖວທຳອິດມີເຊວທີ່ລວມກັນ." },
+      { en: "A table row set to start on a new page now does, and cell margins from Word are kept.", lo: "ແຖວຕາຕະລາງທີ່ຕັ້ງໃຫ້ຂຶ້ນໜ້າໃໝ່ ຈະເລີ່ມຢູ່ໜ້າໃໝ່ແທ້, ແລະ ໄລຍະຫ່າງພາຍໃນເຊວຈາກ Word ຖືກຮັກສາໄວ້." },
+      { en: "Tables without set column widths no longer shrink when a row moves to the next page.", lo: "ຕາຕະລາງທີ່ບໍ່ໄດ້ກຳນົດຄວາມກວ້າງຖັນ ບໍ່ຫົດແຄບລົງອີກ ເມື່ອແຖວຍ້າຍໄປໜ້າຕໍ່ໄປ." },
+    ],
+    files: {
+      "mac-arm64": { file: "DocBase-1.0.1-mac-arm64.dmg", size: "131 MB" },
+      "mac-x64": { file: "DocBase-1.0.1-mac-x64.dmg", size: "138 MB" },
+      "win-x64": { file: "DocBase-1.0.1-windows-setup.exe", size: "117 MB" },
+    },
+  },
+  {
     product: "sheetbase",
     version: "1.0.0",
     date: "2026-10-19",

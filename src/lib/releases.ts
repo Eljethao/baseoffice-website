@@ -37,6 +37,25 @@ export interface Release {
 /** Newest first. Add a new entry here for every release. */
 export const RELEASES: Release[] = [
   {
+    product: "sheetbase",
+    version: "1.0.1",
+    date: "2026-11-09",
+    summary: { en: "Undo, copy and paste now work while you're typing in a cell or a text box.", lo: "Undo, ສຳເນົາ ແລະ ວາງ ໃຊ້ໄດ້ແລ້ວ ໃນຂະນະທີ່ພິມຢູ່ໃນເຊວ ຫຼື ຊ່ອງຂໍ້ຄວາມ." },
+    notes: [
+      { en: "Undo and Redo now work while you're typing in a cell or the formula bar.", lo: "Undo ແລະ Redo ໃຊ້ໄດ້ແລ້ວ ໃນຂະນະທີ່ກຳລັງພິມຢູ່ໃນເຊວ ຫຼື ແຖບສູດ." },
+      { en: "Pasting while you're typing in a cell now puts the text into the cell.", lo: "ການວາງ ໃນຂະນະທີ່ກຳລັງພິມຢູ່ໃນເຊວ ຈະວາງຂໍ້ຄວາມລົງໃນເຊວນັ້ນແລ້ວ." },
+      { en: "In the Name Box, Find and Replace, and dialog boxes, copy, cut, paste and undo now apply to the text you're editing. They no longer change the cells.", lo: "ໃນ Name Box, Find and Replace ແລະ ກ່ອງໂຕ້ຕອບ, ການສຳເນົາ, ຕັດ, ວາງ ແລະ Undo ຈະເຮັດກັບຂໍ້ຄວາມທີ່ກຳລັງແກ້ໄຂ. ບໍ່ປ່ຽນແປງເຊວອີກແລ້ວ." },
+      { en: "The Home tab now starts with Undo and Redo buttons.", lo: "ແຖບ Home ມີປຸ່ມ Undo ແລະ Redo ຢູ່ທາງຕົ້ນແລ້ວ." },
+      { en: "Right-clicking in a cell you're editing, the formula bar or a text box now shows Cut, Copy and Paste.", lo: "ຄລິກຂວາໃນເຊວທີ່ກຳລັງແກ້ໄຂ, ແຖບສູດ ຫຼື ຊ່ອງຂໍ້ຄວາມ ຈະສະແດງ Cut, Copy ແລະ Paste ແລ້ວ." },
+      { en: "Keyboard shortcuts no longer change the cells behind an open dialog box.", lo: "ປຸ່ມລັດບໍ່ປ່ຽນແປງເຊວທີ່ຢູ່ຫຼັງກ່ອງໂຕ້ຕອບທີ່ເປີດຢູ່ອີກແລ້ວ." },
+    ],
+    files: {
+      "mac-arm64": { file: "SheetBase-1.0.1-mac-arm64.dmg", size: "133 MB" },
+      "mac-x64": { file: "SheetBase-1.0.1-mac-x64.dmg", size: "141 MB" },
+      "win-x64": { file: "SheetBase-1.0.1-windows-setup.exe", size: "119 MB" },
+    },
+  },
+  {
     product: "slidebase",
     version: "1.0.0",
     date: "2026-10-30",

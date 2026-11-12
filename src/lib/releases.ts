@@ -37,6 +37,25 @@ export interface Release {
 /** Newest first. Add a new entry here for every release. */
 export const RELEASES: Release[] = [
   {
+    product: "docbase",
+    version: "1.0.2",
+    date: "2026-11-12",
+    summary: { en: "Footnotes at the bottom of each page, Word tab stops, and a dark mode where every document stays readable.", lo: "ໝາຍເຫດທ້າຍໜ້າຢູ່ລຸ່ມສຸດຂອງແຕ່ລະໜ້າ, ແທັບແບບ Word ແລະ ໂໝດມືດທີ່ອ່ານເອກະສານໄດ້ທຸກສະບັບ." },
+    notes: [
+      { en: "Footnotes now appear at the bottom of the page that cites them, on screen and in PDFs, so pages break like in Word and Google Docs.", lo: "ໝາຍເຫດທ້າຍໜ້າສະແດງຢູ່ລຸ່ມສຸດຂອງໜ້າທີ່ອ້າງອີງແລ້ວ, ທັງໃນໜ້າຈໍ ແລະ ໃນ PDF, ການແບ່ງໜ້າຈຶ່ງຄືກັບ Word ແລະ Google Docs." },
+      { en: "Tab stops from Word documents are kept: text lines up at left, center, right and decimal tabs, with dot leaders, and underlined blanks such as “Name: ______” show again.", lo: "ຮັກສາຕຳແໜ່ງແທັບຈາກເອກະສານ Word: ຂໍ້ຄວາມລຽງຕາມແທັບຊ້າຍ, ກາງ, ຂວາ ແລະ ຈຸດທົດສະນິຍົມ ພ້ອມເສັ້ນຈຸດ, ແລະ ຊ່ອງວ່າງທີ່ມີເສັ້ນກ້ອງ ເຊັ່ນ “ຊື່: ______” ສະແດງອີກຄັ້ງ." },
+      { en: "In dark mode, text and tables with their own colours stay readable: near-black text turns light, and light cell shading, highlights and borders are adjusted to the dark page.", lo: "ໃນໂໝດມືດ, ຂໍ້ຄວາມ ແລະ ຕາຕະລາງທີ່ມີສີຂອງຕົວເອງ ຍັງອ່ານໄດ້: ຂໍ້ຄວາມສີເກືອບດຳຈະເປັນສີອ່ອນ, ແລະ ສີພື້ນເຊວ, ສີໄຮໄລທ໌ ແລະ ເສັ້ນຂອບຈະປັບໃຫ້ເຂົ້າກັບໜ້າມືດ." },
+      { en: "PDFs exported in dark mode now have black text instead of light grey.", lo: "PDF ທີ່ສົ່ງອອກໃນໂໝດມືດ ມີຂໍ້ຄວາມສີດຳແລ້ວ ແທນສີເທົາອ່ອນ." },
+      { en: "Lines with footnote numbers no longer grow taller, and footnotes use Word's line spacing, so each page holds as much text as in Word.", lo: "ແຖວທີ່ມີເລກໝາຍເຫດ ບໍ່ສູງຂຶ້ນອີກແລ້ວ, ແລະ ໝາຍເຫດທ້າຍໜ້າໃຊ້ໄລຍະຫ່າງແຖວຄືກັບ Word, ແຕ່ລະໜ້າຈຶ່ງບັນຈຸຂໍ້ຄວາມໄດ້ເທົ່າກັບ Word." },
+      { en: "Page numbers in a footer text box show in the right place, without a frame.", lo: "ເລກໜ້າທີ່ຢູ່ໃນກ່ອງຂໍ້ຄວາມຂອງສ່ວນທ້າຍໜ້າ ສະແດງຢູ່ບ່ອນທີ່ຖືກຕ້ອງ ໂດຍບໍ່ມີກອບ." },
+    ],
+    files: {
+      "mac-arm64": { file: "DocBase-1.0.2-mac-arm64.dmg", size: "131 MB" },
+      "mac-x64": { file: "DocBase-1.0.2-mac-x64.dmg", size: "138 MB" },
+      "win-x64": { file: "DocBase-1.0.2-windows-setup.exe", size: "117 MB" },
+    },
+  },
+  {
     product: "sheetbase",
     version: "1.0.1",
     date: "2026-11-09",
